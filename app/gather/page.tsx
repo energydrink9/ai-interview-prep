@@ -2,35 +2,28 @@
 
 import { PropsWithChildren, useState } from "react";
 import { GatherApplicantProfile, GatherJob } from "./Gather";
-import { InterviewPreparationPlan } from "../interview-preparation-plan.tsx/page";
+import { useSearchParams } from "../routing/use-search-params";
+import { useRouter } from "next/navigation";
 
 const Container: React.FC<PropsWithChildren> = ({ children }) => <div className="max-w-lg">{children}</div>
 
 const Gather = () => {
-    const [jobUrl, setJobUrl] = useState<string | undefined>(undefined)
-    const [applicantProfileUrl, setApplicantProfileUrl] = useState<string | undefined>(undefined)
-    const resetAll = () => {
-        setJobUrl(undefined)
-        setApplicantProfileUrl(undefined)
-    }
-    const resetJobUrl = () => {
-        setJobUrl(undefined)
+    const router = useRouter()
+
+    const submit = (jobUrl: string) => {
+        router.push(`/plan?jobUrl=${jobUrl}`)
     }
     
-    if (jobUrl === undefined) {
-        return <GatherJob onSubmit={setJobUrl} />
-    }
-
-    if (applicantProfileUrl === undefined) {
-        return <GatherApplicantProfile onSubmit={setApplicantProfileUrl} onCancel={resetJobUrl} />
-    }
-
-    return <InterviewPreparationPlan jobUrl={jobUrl} applicantProfileUrl={applicantProfileUrl} onCancel={resetAll} />
+    return <GatherJob onSubmit={submit} />
 }
 
 const Page = () => {
     
-    return <Container><Gather /></Container>
+    return <div className="flex flex-col space-y-20">
+        <Container>
+            <Gather />
+        </Container>
+    </div>
 }
 
 export default Page

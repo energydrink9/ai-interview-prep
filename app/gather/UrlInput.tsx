@@ -1,15 +1,16 @@
 'use client'
 
-import { ChangeEvent, KeyboardEvent, ClipboardEvent } from "react";
+import { ChangeEvent, KeyboardEvent, ClipboardEvent, useRef } from "react";
 
 interface UrlInputProps {
     onChange: (value: string) => void;
     onEnter: () => void;
     onPaste: (value: string) => void;
+    autoFocus?: boolean
 }
 
-export const UrlInput: React.FC<UrlInputProps> = ({ onChange, onEnter, onPaste }) => {
-    
+export const UrlInput: React.FC<UrlInputProps> = ({ onChange, onEnter, onPaste, autoFocus = false }) => {
+   
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value)
     }
@@ -25,6 +26,6 @@ export const UrlInput: React.FC<UrlInputProps> = ({ onChange, onEnter, onPaste }
     }
 
     return (
-        <input type="text" placeholder="Type here" className="input w-full max-w-2xl" onChange={handleChange} onKeyDown={handleKeyDown} onPaste={handlePaste} />
+        <input autoFocus={autoFocus} type="text" placeholder="Type here" className="input w-full max-w-2xl" onChange={handleChange} onKeyDown={handleKeyDown} onPaste={handlePaste} />
     )
 }
