@@ -19,10 +19,6 @@ class PlanRequest(BaseModel):
     jobUrl: str
 
 
-class SessionResponse(BaseModel):
-    pass
-
-
 @app.post("/plan", response_model=PlanResponse)
 async def plan(request: PlanRequest):
     jobUrl = request.jobUrl
