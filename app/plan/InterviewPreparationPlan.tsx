@@ -31,7 +31,21 @@ export const InterviewPreparationPlan: React.FC = ({}) => {
     }
 
     if (status == 'pending') {
-        return <div><span className="loading loading-spinner loading-lg"></span></div>
+        return <div className="flex flex-col space-y-5">
+            <div>
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+            <div className="flex w-52 flex-col gap-4">
+                <div className="flex items-center gap-4">
+                    <div className="skeleton h-16 w-16 shrink-0 rounded-full"></div>
+                    <div className="flex flex-col gap-4">
+                    <div className="skeleton h-5 w-30"></div>
+                    <div className="skeleton h-5 w-40"></div>
+                    </div>
+                </div>
+                <div className="skeleton h-40 w-60"></div>
+            </div>    
+        </div>
     }
 
     if (data === undefined) {

@@ -37,7 +37,8 @@ export const InterviewSession: React.FC = () => {
     if (status == 'pending') {
         return <div><span className="loading loading-spinner loading-lg"></span></div>
     }
-    
+
+    const job = data?.job
     const sessionIndex = parseInt(sessionIndexParam)
     const sessions = data?.plan.sessions ?? []
     const session = sessions[sessionIndex]
@@ -45,9 +46,15 @@ export const InterviewSession: React.FC = () => {
     if (session === undefined) {
         return null
     }
+    if (job === undefined) {
+        return null
+    }
 
     const start = () => {
         setSessionStatus('started')
+    }
+    const stop = () => {
+        setSessionStatus('stopped')
     }
 
     return (
@@ -70,7 +77,7 @@ export const InterviewSession: React.FC = () => {
 
                 <div className="flex flex-row justify-center">
                     { sessionStatus == 'stopped' && <Button primary onClick={start}>Start this session</Button>}
-                    { sessionStatus == 'started' && <StartedInterviewSession /> }
+                    { sessionStatus == 'started' && <StartedInterviewSession job={job} session={session} onQuit={stop}/> }
                 </div>
             </div>
             <div className="flex flex-row space-x-4 w-full">
