@@ -1,3 +1,6 @@
+![Build and Deployment](https://github.com/energydrink9/ai-interview-prep/actions/workflows/deploy.yml/badge.svg)
+
+
 # AI Interview Prep
 
 AI Interview Prep is an intelligent interview preparation platform that helps job seekers prepare for their interviews through personalized coaching, skill assessment, and practice sessions. The application analyzes job postings and creates customized preparation plans tailored to specific roles and companies.
