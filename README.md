@@ -1,48 +1,172 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Interview Prep
+
+AI Interview Prep is an intelligent interview preparation platform that helps job seekers prepare for their interviews through personalized coaching, skill assessment, and practice sessions. The application analyzes job postings and creates customized preparation plans tailored to specific roles and companies.
+
+## Features
+
+- **Job Analysis**: Automatically extracts and analyzes job requirements, company information, and role responsibilities from job postings
+- **Personalized Preparation Plans**: Creates custom interview preparation plans based on the job requirements
+- **Structured Practice Sessions**: Guides users through focused practice sessions targeting specific skills and competencies
+- **Real-time Interview Practice**: Integrates with OpenAI's real-time API for interactive interview practice sessions
+- **Skills Assessment**: Provides detailed breakdown of required skills and competencies for the target role
+- **Progress Tracking**: Tracks completion of practice sessions and preparation milestones
+
+## Tech Stack
+
+- **Frontend**: Next.js 15.1, React 19, TypeScript
+- **Backend**: Python with FastAPI
+- **AI/ML**: LangChain with GPT-4
+- **Styling**: Tailwind CSS with DaisyUI
+- **State Management**: TanStack Query
+- **Testing**: Jest, React Testing Library
+- **API Mocking**: MSW (Mock Service Worker)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- Python 3.8+
+- OpenAI API key
+- Tavily API key (for web search capabilities)
+
+### Environment Setup
+
+1. Clone the repository:
 ```bash
+git clone https://github.com/yourusername/ai-interview-prep.git
+cd ai-interview-prep
+```
+
+2. Install frontend dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Install backend dependencies:
+```bash
+cd api
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+4. Set up environment variables:
+
+Create a `.env` file in the root directory:
+```env
+OPENAI_API_KEY=your_openai_api_key
+TAVILY_API_KEY=your_tavily_api_key
+```
+
+### Running the Application
+
+1. Start the backend server:
+```bash
+cd api
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+python index.py
+```
+
+2. In a new terminal, start the frontend development server:
+```bash
+# Regular development mode
 npm run dev
 # or
 yarn dev
+
+# Development mode with mocked APIs
+npm run dev-mock
 # or
-pnpm dev
-# or
-bun dev
+yarn dev-mock
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Running Tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Run tests in watch mode with coverage
+npm test
 
-## Mocked environment
-To start the app in development mode with mocked APIs, run instead
+# Run tests once for CI
+npm run test:ci
+
+# Run a single test file
+npm run test:single
+```
+
+## Project Structure
+
+```
+├── api/                 # Python backend
+│   ├── index.py        # FastAPI application
+│   └── planner_agent.py # LangChain agent implementation
+├── app/
+│   ├── api/            # Frontend API clients
+│   ├── components/     # Shared React components
+│   ├── gather/         # Job URL input page
+│   ├── interview-session/ # Interview practice session
+│   ├── plan/           # Preparation plan display
+│   └── providers/      # React context providers
+├── public/             # Static assets
+└── package.json
+```
+
+## Development
+
+### API Mocking
+
+The application includes a mock API implementation using MSW (Mock Service Worker). To run the application with mocked APIs:
+
 ```bash
 npm run dev-mock
 # or
 yarn dev-mock
-# or
-pnpm dev-mock
-# or
-bun dev-mock
 ```
 
-## Learn More
+This is useful for development and testing when you don't want to make actual API calls.
 
-To learn more about Next.js, take a look at the following resources:
+### Adding New Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Create a new feature branch:
+```bash
+git checkout -b feature/your-feature-name
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Make your changes and commit them:
+```bash
+git add .
+git commit -m "feat: add your feature"
+```
 
-## Deploy on Vercel
+3. Push to your branch and create a pull request:
+```bash
+git push origin feature/your-feature-name
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application is configured for deployment on Vercel. The deployment process is automated through GitHub Actions (see `.github/workflows/deploy.yml`).
+
+To deploy manually:
+
+1. Install Vercel CLI:
+```bash
+npm i -g vercel
+```
+
+2. Deploy:
+```bash
+vercel
+```
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines and code of conduct before submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
