@@ -33,6 +33,7 @@ AI Interview Prep is a **job interview preparation web application** powered by 
 - Python 3.8+
 - OpenAI API key
 - Tavily API key (for web search capabilities)
+- Lakera Guard API key (for checking prompt injection) 
 
 ### Environment Setup
 

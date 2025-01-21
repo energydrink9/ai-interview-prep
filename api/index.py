@@ -11,6 +11,8 @@ from FetchJobInfoException import FetchJobInfoException
 from response_model import ErrorModel
 from plan_response import PlanResponse
 from planner_agent import run_agents
+from lakera_chainguard import LakeraGuardError
+
 
 app = FastAPI()
 
@@ -21,15 +23,23 @@ class PlanRequest(BaseModel):
 
 @app.post("/plan", response_model=PlanResponse)
 async def plan(request: PlanRequest):
+
     jobUrl = request.jobUrl
-    if not validators.url(jobUrl):
-        error = ErrorModel(code="INVALID_ARGUMENT", message="Invalid URL")
-        raise HTTPException(status_code=400, detail=error.model_dump())
+    
     try:
-        job, plan = await run_agents(jobUrl)
-        return PlanResponse(job=job, plan=plan)
-    except FetchJobInfoException as e:
-        raise HTTPException(status_code=400, detail=e.error.model_dump())
+        if not validators.url(jobUrl):
+            error = ErrorModel(code="INVALID_ARGUMENT", message="Invalid URL")
+            raise HTTPException(status_code=400, detail=error.model_dump())
+        try:
+            job, plan = await run_agents(jobUrl)
+            return PlanResponse(job=job, plan=plan)
+        except FetchJobInfoException as e:
+            raise HTTPException(status_code=400, detail=e.error.model_dump())
+
+    except LakeraGuardError as e:
+        print('Detected prompt injection. Prompt:', jobUrl, 'Error:', e.lakera_guard_response)
+        error = ErrorModel(code="SECURITY_ERROR", message="Prompt is not valid")
+        raise HTTPException(status_code=403, detail=error.model_dump())
 
 
 @app.get("/session/token")
