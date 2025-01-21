@@ -3,12 +3,13 @@
 
 # AI Interview Prep
 
-AI Interview Prep is an intelligent interview preparation platform that helps job seekers prepare for their interviews through personalized coaching, skill assessment, and practice sessions. The application analyzes job postings and creates customized preparation plans tailored to specific roles and companies.
+AI Interview Prep is a job interview preparation platform powered by AI. The application uses LangChain agents with GPT-4 to automatically analyze job postings and company information, generating personalized preparation plans. The app leverages OpenAI's Realtime voice technology to allow users to practice voice-based mock interviews with an AI coach that provides feedback and guidance.
 
 ## Features
 
 - **Job Analysis**: Automatically extracts and analyzes job requirements, company information, and role responsibilities from job postings
 - **Personalized Preparation Plans**: Creates custom interview preparation plans based on the job requirements
+- **Virtual Interview Coach**: Utilizing OpenAI's Realtime voice technology, users can practice with a responsive AI interviewer that adapts to their responses, provides immediate feedback, and helps improve their interview performance.
 - **Structured Practice Sessions**: Guides users through focused practice sessions targeting specific skills and competencies
 - **Real-time Interview Practice**: Integrates with OpenAI's real-time API for interactive interview practice sessions
 - **Skills Assessment**: Provides detailed breakdown of required skills and competencies for the target role
