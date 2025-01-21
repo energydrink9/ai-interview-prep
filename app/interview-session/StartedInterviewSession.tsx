@@ -1,11 +1,8 @@
 import { Button } from "../gather/Button"
 import { useSessionToken } from "./use-session-token"
 
-interface StartedInterviewSessionProps {
 
-}
-
-export const StartedInterviewSession: React.FC<StartedInterviewSessionProps> = () => {
+export const StartedInterviewSession: React.FC = () => {
     const { status, sessionToken, refetch } = useSessionToken()
 
     const retry = () => {

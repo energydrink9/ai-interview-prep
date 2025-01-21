@@ -6,9 +6,11 @@ export async function enableMocking() {
         return
     }
 
-    const { worker } = await import('./browser')
-
-    // `worker.start()` returns a Promise that resolves
-    // once the Service Worker is up and ready to intercept requests.
-    return worker.start()
+    if (typeof window !== 'undefined') {
+        const { worker } = await import('./browser')
+        
+        // `worker.start()` returns a Promise that resolves
+        // once the Service Worker is up and ready to intercept requests.
+        return worker.start()
+    }
 }

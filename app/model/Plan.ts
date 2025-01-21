@@ -15,7 +15,9 @@ export interface Plan {
     sessions: Array<InterviewPreparationSession>;
 }
 
-export type Job = any
+export interface Job {
+    company: string;
+}
 
 export interface PlanResponse {
     job: Job;

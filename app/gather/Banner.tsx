@@ -1,10 +1,6 @@
 import Link from "next/link"
 
-interface BannerProps {
-
-}
-
-export const Banner: React.FC<BannerProps> = () => {
+export const Banner: React.FC = () => {
     return (
         <div className="hero min-h-screen" style={{
           backgroundImage: "url(banner.jpg)",

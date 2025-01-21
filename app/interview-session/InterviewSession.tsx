@@ -5,14 +5,10 @@ import { Button } from "../gather/Button"
 import { useSearchParams } from "../routing/use-search-params"
 import { useInterviewPrepPlan } from "../plan/use-interview-prep-plan"
 import { InterviewSessionSteps } from "./InterviewSessionSteps"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { StartedInterviewSession } from "./StartedInterviewSession"
 
-interface InterviewSessionProps {
-
-}
-
-export const InterviewSession: React.FC<InterviewSessionProps> = () => {
+export const InterviewSession: React.FC = () => {
 
     const router = useRouter()
     const [jobUrl] = useSearchParams('jobUrl')
@@ -55,7 +51,7 @@ export const InterviewSession: React.FC<InterviewSessionProps> = () => {
     }
 
     return (
-        <div className="flex flex-col space-y-10 items-center">
+        <>
             <InterviewSessionSteps sessions={sessions} currentSessionIndex={sessionIndex} />
             <div className="flex flex-col space-y-10 max-w-2xl">
                 <div className="prose">
@@ -82,6 +78,16 @@ export const InterviewSession: React.FC<InterviewSessionProps> = () => {
                 <Button onClick={() => startSession(sessionIndex - 1)} disabled={sessionIndex == 0}>Previous session</Button>
                 <Button onClick={() => startSession(sessionIndex + 1)} disabled={sessionIndex == sessions.length - 1}>Skip this session</Button>
             </div>
+        </>
+    )
+}
+
+export const InterviewSessionPage: React.FC = () => {
+    return (
+        <div className="flex flex-col space-y-10 items-center">
+            <Suspense>
+                <InterviewSession />
+            </Suspense>
         </div>
     )
 }

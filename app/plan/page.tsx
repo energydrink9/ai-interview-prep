@@ -1,6 +1,6 @@
 'use client'
 
-import { InterviewPreparationPlan } from "./InterviewPreparationPlan";
+import { InterviewPreparationPlanPage } from "./InterviewPreparationPlan";
 
 
-export default InterviewPreparationPlan
+export default InterviewPreparationPlanPage

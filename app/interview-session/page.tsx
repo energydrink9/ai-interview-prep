@@ -1,3 +1,3 @@
-import { InterviewSession } from "./InterviewSession";
+import { InterviewSessionPage } from "./InterviewSession";
 
-export default InterviewSession
+export default InterviewSessionPage

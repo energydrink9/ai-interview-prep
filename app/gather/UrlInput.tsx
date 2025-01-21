@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEvent, KeyboardEvent, ClipboardEvent, useRef } from "react";
+import { ChangeEvent, KeyboardEvent, ClipboardEvent } from "react";
 
 interface UrlInputProps {
     onChange: (value: string) => void;

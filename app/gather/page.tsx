@@ -1,8 +1,7 @@
 'use client'
 
-import { PropsWithChildren, useState } from "react";
-import { GatherApplicantProfile, GatherJob } from "./Gather";
-import { useSearchParams } from "../routing/use-search-params";
+import { PropsWithChildren } from "react";
+import { GatherJob } from "./Gather";
 import { useRouter } from "next/navigation";
 
 const Container: React.FC<PropsWithChildren> = ({ children }) => <div className="max-w-lg">{children}</div>
