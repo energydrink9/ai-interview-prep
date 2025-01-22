@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "../gather/Button"
 import { useSessionToken } from "./use-session-token"
 import { InterviewPreparationSession } from "../model/Plan";
 
 
 const REALTIME_API_URL = "https://api.openai.com/v1/realtime";
-const REALTIME_API_MODEL = "gpt-4o-realtime-preview-2024-12-17";
+const REALTIME_API_MODEL = "gpt-4o-mini-realtime-preview-2024-12-17";
 
 
 const getPrompt = (job: any, session: InterviewPreparationSession): string => {
@@ -36,13 +36,11 @@ Now start the session by introducing yourself and setting the agenda. Good luck!
 }
 
 
-const connect = async (connection: RTCPeerConnection, key: string, prompt: string) => {
+const connect = async (audioElement: HTMLAudioElement, connection: RTCPeerConnection, key: string, prompt: string) => {
 
     // Set up to play remote audio from the model
-    const audioEl = document.createElement("audio");
-    audioEl.autoplay = true;
-    connection.ontrack = e => audioEl.srcObject = e.streams[0];
-
+    connection.ontrack = e => audioElement.srcObject = e.streams[0];
+    
     // Add local audio track for microphone input in the browser
     const mediaStream = await navigator.mediaDevices.getUserMedia({
         audio: true
@@ -101,13 +99,14 @@ const connect = async (connection: RTCPeerConnection, key: string, prompt: strin
 }
 
 const closeConnection = async (connection: RTCPeerConnection) => {
+    //if (connection.connectionState === "connected" || connection.connectionState === "failed") {
     connection.close();
+    //}
 
     // Stop all media tracks (senders)
     connection.getSenders().forEach(sender => {
         if (sender.track !== null) {
             sender.track.stop();
-            console.log("Stopped media track:", sender.track);
         }
     });
 };
@@ -158,29 +157,32 @@ export const StartedInterviewSession: React.FC<StartedInterviewSession> = ({ job
         onQuit()
     }
 
+    const audioRef = useCallback(
+        (node: HTMLAudioElement) => {
+            if (status == 'success') {
+                const connection = new RTCPeerConnection();
+                connect(node, connection, sessionToken!, prompt)
+                return () => {
+                    closeConnection(connection)
+                }
+            }
+        },
+        [status, sessionToken, session],
+    )
+
     const duration = useMemo(() => session.durationInMinutes * 60 * 1000,[session.durationInMinutes])
     const [startTime] = useState(new Date().getTime())
 
     useEffect(() => {
         const interval = setInterval(() => {
             quit()
-        }, 60 * 1000)
+        }, session.durationInMinutes * 60 * 1000)
         return () => {
             clearInterval(interval)
         }
-    }, [session])
+    }, [])
 
     const prompt = getPrompt(job, session)
-
-    useEffect(() => {
-        if (status == 'success') {
-            const connection = new RTCPeerConnection();
-            connect(connection, sessionToken!, prompt)
-            return () => {
-                closeConnection(connection)
-            }
-        }
-    }, [status, sessionToken, session])
 
     if (status == 'error') {
         return (
@@ -196,6 +198,7 @@ export const StartedInterviewSession: React.FC<StartedInterviewSession> = ({ job
     }
 
     return <div className="prose flex flex-col space-y-4">
+        <audio autoPlay ref={audioRef} />
         <p>
             You are now in a voice-based interview session. Please ensure you have a microphone and speaker enabled.
         </p>

@@ -12,6 +12,10 @@ export const useInterviewPrepPlan = (jobUrl: string) => {
         queryFn: () => fetchInterviewPrepPlan(jobUrl),
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
+        refetchIntervalInBackground: false,
+        refetchInterval: false,
+        refetchOnMount: false,
+        staleTime: Infinity,
         retry: (_failureCount: number, error: ApiError) => error.status == 429 || error.status >= 500,
     })
     return { status, data }
