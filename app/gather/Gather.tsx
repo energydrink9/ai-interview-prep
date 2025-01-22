@@ -31,7 +31,13 @@ export const GatherJob: React.FC<GatherJobProps> = ({ onSubmit }) => {
             <div className="prose">
                 <h2>Job posting</h2>
                 <p>
-                    Preparing for a job interview can be overwhelming, but we&apos;re here to help. Our AI-powered tool analyzes job postings and company information to create a personalized interview preparation plan just for you. Simply paste the link to the job posting, and we&apos;ll guide you through mock interviews, customized questions, and tips to boost your confidence.
+                    Preparing for a job interview can be overwhelming, but we&apos;re here to help.
+                </p>
+                <p>
+                    Our AI-powered tool analyzes job postings and company information to create a personalized interview preparation plan just for you.
+                </p>
+                <p>
+                    Simply paste the link to the job posting, and we&apos;ll guide you through mock interviews, customized questions, and tips to boost your confidence.
                 </p>
             </div>
             <div><UrlInput autoFocus onChange={setUrl} onPaste={handlePaste} onEnter={handleSubmit} /></div>

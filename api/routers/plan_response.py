@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from job_info_model import JobInfoModel
-from plan_model import PlanModel
+from agents.JobInfoModel import JobInfoModel
+from model.plan_model import PlanModel
 
 
 class PlanResponse(BaseModel):

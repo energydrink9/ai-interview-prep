@@ -1,7 +1,9 @@
-export const LoadingSpinner: React.FC = () => {
+interface LoadingSpinnerProps {
+    size?: 'loading-sm' | 'loading-lg';
+}
+
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 'loading-lg' }) => {
     return (
-        <div>
-            <span className="loading loading-spinner loading-lg"/>
-        </div>
+        <span className={`loading loading-spinner ${size}`} />
     )
 }

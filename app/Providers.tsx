@@ -25,6 +25,8 @@ const AuthenticationProvider: React.FC<PropsWithChildren> = ({ children }) => {
                 audience: AUTH0_API_AUDIENCE,
                 scope: 'openid profile email',
             }}
+            useRefreshTokens
+            cacheLocation="localstorage"
         >
             {children}
         </Auth0Provider>

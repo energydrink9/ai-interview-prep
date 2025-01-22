@@ -12,12 +12,12 @@ from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
 from langchain_community.tools.playwright.utils import create_async_playwright_browser
 import traceback
 
-from FetchJobInfoException import FetchJobInfoException
-from prompts.gather_agent_prompt import GATHER_AGENT_PROMPT
-from prompts.planner_agent_prompt import PLANNER_AGENT_PROMPT
-from response_model import ErrorModel, ResponseModel, ResponseStatusEnum
-from job_info_model import JobInfoModel, JobInfoErrorCodes
-from plan_model import PlanModel, PlanErrorCodes
+from agents.FetchJobInfoException import FetchJobInfoException
+from agents.prompts.gather_agent_prompt import GATHER_AGENT_PROMPT
+from agents.prompts.planner_agent_prompt import PLANNER_AGENT_PROMPT
+from routers.response_model import ErrorModel, ResponseModel, ResponseStatusEnum
+from agents.JobInfoModel import JobInfoModel, JobInfoErrorCodes
+from model.plan_model import PlanModel, PlanErrorCodes
 from lakera_chainguard import LakeraChainGuard
 
 chain_guard = LakeraChainGuard()

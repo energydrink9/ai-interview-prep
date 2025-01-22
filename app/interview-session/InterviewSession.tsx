@@ -37,7 +37,7 @@ export const InterviewSession: React.FC = () => {
     }
 
     if (status == 'pending') {
-        return <LoadingSpinner />
+        return <div><LoadingSpinner /></div>
     }
 
     const job = data?.job
@@ -93,7 +93,7 @@ export const InterviewSession: React.FC = () => {
 
 export const InterviewSessionPage: React.FC = () => {
     return (
-        <Authenticate redirectUrl={}>
+        <Authenticate>
             <div className="flex flex-col space-y-10 items-center">
                 <Suspense>
                     <InterviewSession />

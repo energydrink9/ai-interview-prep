@@ -1,5 +1,5 @@
-from response_model import ErrorModel
-from job_info_model import JobInfoErrorCodes
+from routers.response_model import ErrorModel
+from agents.JobInfoModel import JobInfoErrorCodes
 
 
 class FetchJobInfoException(Exception):
