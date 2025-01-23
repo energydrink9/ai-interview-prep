@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev-mock": "NEXT_PUBLIC_ENABLE_MOCKING=true next dev --turbopack",
-    "dev": "next dev --turbopack",
+    "dev-mock": "NEXT_PUBLIC_ENABLE_MOCKING=true next dev --turbopack --experimental-https",
+    "dev": "next dev --turbopack --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,11 +13,12 @@
     "test:single": "jest --watch --collectCoverage=false"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@tanstack/react-query": "^5.64.1",
     "classnames": "^2.5.1",
     "next": "15.1.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -27,8 +28,8 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.0",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "daisyui": "^4.12.23",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",

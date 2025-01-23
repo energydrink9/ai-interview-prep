@@ -1,9 +1,10 @@
 import { PlanResponse } from "../model/Plan"
 
-export const fetchInterviewPrepPlan = async (jobUrl: string): Promise<PlanResponse> => {
+export const fetchInterviewPrepPlan = async (jobUrl: string, jwtToken: string): Promise<PlanResponse> => {
     const headers = {
         'Content-type':'application/json', 
-        'Accept':'application/json'
+        'Accept':'application/json',
+        Authorization: `Bearer ${jwtToken}`,
     }
     const body = {
         jobUrl,

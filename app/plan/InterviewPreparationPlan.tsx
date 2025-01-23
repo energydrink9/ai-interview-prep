@@ -1,10 +1,11 @@
 import { useRouter } from "next/navigation"
 import { useSearchParams } from "../routing/use-search-params"
-import { Button } from "../gather/Button"
+import { Button } from "../components/Button"
 import { RequirementsTable } from "./RequirementsTable"
 import { SessionsTable } from "./SessionsTable"
 import { useInterviewPrepPlan } from "./use-interview-prep-plan"
 import { Suspense } from "react"
+import { Authenticate } from "../components/Authenticate"
 
 
 export const InterviewPreparationPlan: React.FC = ({}) => {
@@ -93,10 +94,12 @@ export const InterviewPreparationPlan: React.FC = ({}) => {
 
 export const InterviewPreparationPlanPage: React.FC = () => {
     return (
-        <div className="flex flex-col space-y-4">
-            <Suspense>
-                <InterviewPreparationPlan />
-            </Suspense>
-        </div>
+        <Authenticate>
+            <div className="flex flex-col space-y-4">
+                <Suspense>
+                    <InterviewPreparationPlan />
+                </Suspense>
+            </div>
+        </Authenticate>
     )
 }

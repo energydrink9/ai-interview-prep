@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Button } from "../gather/Button"
+import { Button } from "../components/Button"
 import { useSessionToken } from "./use-session-token"
 import { InterviewPreparationSession } from "../model/Plan";
 

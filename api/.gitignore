@@ -1,2 +1,4 @@
 __pycache__
 secrets.sh
+*.env
+!example.env

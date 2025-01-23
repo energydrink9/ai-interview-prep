@@ -1,4 +1,4 @@
-import { Banner } from "./gather/Banner";
+import { Banner } from "./Banner";
 
 export default function Home() {
   return (

@@ -1,4 +1,4 @@
-import { Button } from "../gather/Button";
+import { Button } from "../components/Button";
 import { Plan } from "../model/Plan"
 
 interface SessionsTableProps {

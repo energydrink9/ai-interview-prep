@@ -9,7 +9,6 @@ from langchain.callbacks.base import BaseCallbackHandler
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
-from langchain_community.tools.playwright import NavigateTool, ExtractTextTool
 from langchain_community.tools.playwright.utils import create_async_playwright_browser
 import traceback
 
@@ -19,11 +18,12 @@ from prompts.planner_agent_prompt import PLANNER_AGENT_PROMPT
 from response_model import ErrorModel, ResponseModel, ResponseStatusEnum
 from job_info_model import JobInfoModel, JobInfoErrorCodes
 from plan_model import PlanModel, PlanErrorCodes
-from lakera_chainguard import LakeraChainGuard, LakeraGuardError
+from lakera_chainguard import LakeraChainGuard
 
 chain_guard = LakeraChainGuard()
 
 DEBUG = False
+ENABLE_GUARD = True
 
 browser = create_async_playwright_browser()
 browser_toolkit = PlayWrightBrowserToolkit.from_browser(async_browser=browser)
@@ -37,9 +37,10 @@ planner_tools: List[BaseTool] = [search]
 class LakeraGuardHandler(BaseCallbackHandler):
     def on_llm_start(self, serialized, prompts, **kwargs):
 
-        for prompt in prompts:
-            if isinstance(prompt, HumanMessage) or isinstance(prompt, ToolMessage):
-                chain_guard.detect(prompt)
+        if ENABLE_GUARD is True:
+            for prompt in prompts:
+                if isinstance(prompt, HumanMessage) or isinstance(prompt, ToolMessage):
+                    chain_guard.detect([prompt])
 
 
 lakera_guard_handler = LakeraGuardHandler()

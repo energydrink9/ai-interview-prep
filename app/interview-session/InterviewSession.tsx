@@ -1,12 +1,14 @@
 'use client'
 
 import { useRouter } from "next/navigation"
-import { Button } from "../gather/Button"
+import { Button } from "../components/Button"
 import { useSearchParams } from "../routing/use-search-params"
 import { useInterviewPrepPlan } from "../plan/use-interview-prep-plan"
 import { InterviewSessionSteps } from "./InterviewSessionSteps"
 import { Suspense, useState } from "react"
 import { StartedInterviewSession } from "./StartedInterviewSession"
+import { LoadingSpinner } from "../components/LoadingSpinner"
+import { Authenticate } from "../components/Authenticate"
 
 export const InterviewSession: React.FC = () => {
 
@@ -35,7 +37,7 @@ export const InterviewSession: React.FC = () => {
     }
 
     if (status == 'pending') {
-        return <div><span className="loading loading-spinner loading-lg"></span></div>
+        return <LoadingSpinner />
     }
 
     const job = data?.job
@@ -91,10 +93,12 @@ export const InterviewSession: React.FC = () => {
 
 export const InterviewSessionPage: React.FC = () => {
     return (
-        <div className="flex flex-col space-y-10 items-center">
-            <Suspense>
-                <InterviewSession />
-            </Suspense>
-        </div>
+        <Authenticate redirectUrl={}>
+            <div className="flex flex-col space-y-10 items-center">
+                <Suspense>
+                    <InterviewSession />
+                </Suspense>
+            </div>
+        </Authenticate>
     )
 }

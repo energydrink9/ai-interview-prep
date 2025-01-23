@@ -1,8 +1,11 @@
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+import jwt
+from environment import get_env
 import asyncio
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import requests
-import os
+
 from pydantic import BaseModel
 import uvicorn
 import validators
@@ -21,8 +24,59 @@ class PlanRequest(BaseModel):
     jobUrl: str
 
 
+AUTH0_DOMAIN = get_env("AUTH0_DOMAIN")
+AUTH0_API_AUDIENCE = get_env("AUTH0_API_AUDIENCE")
+AUTH0_ALGORITHMS = get_env("AUTH0_ALGORITHMS")
+
+security = HTTPBearer()
+
+
+# Function to get the JWKS (JSON Web Key Set)
+def get_public_key(token: str):
+    # Fetch Auth0 JWKS (JSON Web Key Set)
+    jwks_url = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
+    jwks_client = jwt.PyJWKClient(jwks_url)
+    
+    return jwks_client.get_signing_key_from_jwt(token)
+
+
+# Function to verify and decode the token
+def verify_jwt(token: str):
+    try:
+        public_key = get_public_key(token)
+
+        # Decode and verify the token
+        payload = jwt.decode(
+            token,
+            key=public_key,
+            algorithms=AUTH0_ALGORITHMS,
+            audience=AUTH0_API_AUDIENCE,
+            issuer=f"https://{AUTH0_DOMAIN}/",
+        )
+
+        return payload
+        
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=401, detail="Error decoding token") from e
+
+
+# Dependency to enforce token validation
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    token = credentials.credentials
+    jwt = verify_jwt(token)
+
+    def get_user_info():
+        userinfo_url = jwt['aud'][1]
+        return requests.get(userinfo_url, {'access_token': token}).json()
+
+    return jwt, get_user_info
+
+
+# user_id = current_user[0]['sub']
+
 @app.post("/plan", response_model=PlanResponse)
-async def plan(request: PlanRequest):
+async def plan(request: PlanRequest, current_user: dict = Depends(get_current_user)):
 
     jobUrl = request.jobUrl
     
@@ -43,12 +97,12 @@ async def plan(request: PlanRequest):
 
 
 @app.get("/session/token")
-async def session():
+async def openai_session():
     try:
         response = requests.post(
             "https://api.openai.com/v1/realtime/sessions",
             headers={
-                "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+                "Authorization": f"Bearer {get_env('OPENAI_API_KEY')}",
                 "Content-Type": "application/json"
             },
             json={
@@ -65,6 +119,14 @@ async def session():
 if __name__ == "__main__":
 
     loop = asyncio.get_event_loop()
-    config = uvicorn.Config(app, host="0.0.0.0", port=5328, loop=loop, timeout_keep_alive=120)
+    config = uvicorn.Config(
+        app,
+        host="0.0.0.0",
+        port=5328,
+        loop=loop,
+        timeout_keep_alive=120,
+        # ssl_certfile='cert/cert.pem',
+        # ssl_keyfile='cert/key.pem',
+    )
     server = uvicorn.Server(config)
     loop.run_until_complete(server.serve())
