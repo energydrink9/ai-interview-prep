@@ -18,6 +18,7 @@ export const useJwtToken = () => {
         refetchInterval: false,
         refetchOnMount: false,
         staleTime: Infinity,
+        enabled: isAuthenticated,
     })
 
     return { status, jwtToken }

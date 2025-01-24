@@ -21,7 +21,7 @@ const AuthenticationProvider: React.FC<PropsWithChildren> = ({ children }) => {
             domain={AUTH0_DOMAIN}
             clientId={AUTH0_CLIENT_ID}
             authorizationParams={{
-                redirect_uri: window.location.origin,
+//                redirect_uri: window.location.origin,
                 audience: AUTH0_API_AUDIENCE,
                 scope: 'openid profile email',
             }}

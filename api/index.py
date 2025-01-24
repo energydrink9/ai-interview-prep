@@ -97,7 +97,7 @@ async def plan(request: PlanRequest, current_user: dict = Depends(get_current_us
 
 
 @app.get("/session/token")
-async def openai_session():
+async def openai_session(current_user: dict = Depends(get_current_user)):
     try:
         response = requests.post(
             "https://api.openai.com/v1/realtime/sessions",
