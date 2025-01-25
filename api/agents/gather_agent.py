@@ -1,6 +1,5 @@
 from typing import Any, List
 from langchain_openai import ChatOpenAI
-from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
