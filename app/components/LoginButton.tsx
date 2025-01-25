@@ -3,8 +3,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "./Button";
 
-const getRedirectUri = () => 
-    'https://localhost:3000'
+const getRedirectUri = () => typeof(window) !== 'undefined' ? window.location.origin : ''
 
 export const LoginButton: React.FC = () => {
 

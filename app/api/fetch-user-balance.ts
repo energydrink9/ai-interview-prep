@@ -1,9 +1,8 @@
-
 interface UserBalanceResponse {
     balance: number;
 }
 
-export const fetchUserBalance = async (jwtToken: string): Promise<UserBalanceResponse> => {
+export const fetchUserBalance = async (backendUrl: string, jwtToken: string): Promise<UserBalanceResponse> => {
 
     const headers = {
         'Content-type':'application/json', 
@@ -11,7 +10,7 @@ export const fetchUserBalance = async (jwtToken: string): Promise<UserBalanceRes
         Authorization: `Bearer ${jwtToken}`,
     }
 
-    const apiCall = await fetch('/api/paymentsbalance', { method: 'GET', headers })
+    const apiCall = await fetch(`${backendUrl}/paymentsbalance`, { method: 'GET', headers })
     
     const response = await apiCall.json()
 

@@ -5,7 +5,6 @@ import { LoginButton } from "./LoginButton";
 import Link from "next/link";
 import Image from "next/image";
 
-
 export const Header: React.FC = () => {
 
     const { user, isAuthenticated, logout } = useAuth0();
@@ -18,7 +17,6 @@ export const Header: React.FC = () => {
         <div className="navbar bg-base-100">
             <div className="flex-1">
                 <Link className="btn btn-ghost text-xl" href="/">
-                    {/* <Image src='/logo.png' alt='AI Interview Prep Logo' className="rounded-full" width={100} height={100} style={{border: 'solid 1px #000'}} /> */}
                     AI Interview Prep
                 </Link>
             </div>
@@ -27,8 +25,10 @@ export const Header: React.FC = () => {
                     <div className="dropdown dropdown-end">
 
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
+                            <div className="w-10">
                             { user.picture !== undefined && <Image
+                                className="rounded-full"
+                                fill={true}
                                 alt="Tailwind CSS Navbar component"
                                 src={user.picture} />}
                             </div>

@@ -3,19 +3,25 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MockingProvider } from "./providers/MockingProvider";
 import { Auth0Provider } from '@auth0/auth0-react';
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, use } from "react";
+import { useEnvironment } from "./providers/use-environment";
+import { EnvironmentContextType } from "./providers/environment-context";
+import { EnvironmentProvider } from "./providers/EnvironmentProvider";
 
-const AUTH0_DOMAIN = 'dev-pasnxxhbjoxjx1of.us.auth0.com'
-const AUTH0_CLIENT_ID = 't0evjULCEPlww8v0iej94uWz2HHI7JMb'
-const AUTH0_API_AUDIENCE = 'http://localhost:5328/'
-
-interface ProvidersProps {
-    children: React.ReactNode;
+interface ProvidersProps extends PropsWithChildren {
+    environmentPromise: Promise<EnvironmentContextType>;
 }
 
 const queryClient = new QueryClient()
 
 const AuthenticationProvider: React.FC<PropsWithChildren> = ({ children }) => {
+
+    const {
+        AUTH0_DOMAIN,
+        AUTH0_CLIENT_ID,
+        AUTH0_API_AUDIENCE,
+    } = useEnvironment()
+
     return (
         <Auth0Provider
             domain={AUTH0_DOMAIN}
@@ -33,14 +39,17 @@ const AuthenticationProvider: React.FC<PropsWithChildren> = ({ children }) => {
     )
 }
 
-export const Providers: React.FC<ProvidersProps> = ({ children }) => {
+export const Providers: React.FC<ProvidersProps> = ({ children, environmentPromise }) => {
+    const environment = use(environmentPromise)
     return (
         <MockingProvider>
-            <AuthenticationProvider>
-                <QueryClientProvider client={queryClient}>
-                    {children}
-                </QueryClientProvider>
-            </AuthenticationProvider>
+            <EnvironmentProvider value={environment}>
+                <AuthenticationProvider>
+                    <QueryClientProvider client={queryClient}>
+                        {children}
+                    </QueryClientProvider>
+                </AuthenticationProvider>
+            </EnvironmentProvider>
         </MockingProvider>
     )
 }
