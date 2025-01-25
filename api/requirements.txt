@@ -7,8 +7,8 @@ pydantic==2.10.5
 Requests==2.32.3
 uvicorn==0.34.0
 validators==0.34.0
-lakera_chainguard==0.1.5
-"pyjwt[crypto]"==2.10.1
+#lakera_chainguard==0.1.5
+pyjwt[crypto]==2.10.1
 python-dotenv==1.0.1
 pyjwt==2.10.1
 stripe==11.4.1
