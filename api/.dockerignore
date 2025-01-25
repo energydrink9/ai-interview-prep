@@ -1,0 +1,10 @@
+# Exclude the virtual environment
+venv
+# Exclude Python cache files
+__pycache__
+*.pyc
+# Exclude git files
+.git
+# Exclude Dockerfile and docker-compose files
+Dockerfile
+docker-compose.yml
