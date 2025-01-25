@@ -25,6 +25,12 @@ const Profile: React.FC = () => {
             <h2>Profile</h2>
 
             <div className="card bg-base-100 w-96 shadow-xl">
+                <figure>
+                    <img
+                    className="rounded-full"
+                    src={user.picture}
+                    alt="User profile picture" />
+                </figure>
                 <div className="card-body">
                     <h2 className="card-title">{user.name}</h2>
                     <p>Email: <span className="italic">{user.email}</span></p>
@@ -37,12 +43,6 @@ const Profile: React.FC = () => {
                         Buy more credits
                     </Button>
                 </div>
-                <figure>
-                    <img
-                    className="rounded-full"
-                    src={user.picture}
-                    alt="User profile picture" />
-                </figure>
             </div>
         </div>
     )

@@ -17,7 +17,7 @@ STRIPE_INTERVIEW_SESSION_PRICE_ID = 'price_1Qju4aDcG9aNPjMBgaktFz1i'
 
 stripe.api_key = STRIPE_SECRET_KEY
 
-router = APIRouter()
+router = APIRouter(prefix='/payments')
 
 
 class CustomerNotFound(Exception):
@@ -113,8 +113,8 @@ def checkout_link(request: Request, current_user: dict = Depends(get_current_use
                 },
             ],
             mode='payment',
-            success_url=domain + '/api/webhook/stripe/successful-payment',
-            cancel_url=domain + '/webhook/stripe/cancelled-payment',
+            success_url=domain + 'api/payments/stripe/successful-payment',
+            cancel_url=domain + 'api/payments/stripe/cancelled-payment',
             automatic_tax={'enabled': True},
         )
 
@@ -125,7 +125,7 @@ def checkout_link(request: Request, current_user: dict = Depends(get_current_use
 
 
 # TODO: Implement success logic
-@router.post('/webhook/stripe/successful-payment')
+@router.post('/stripe/successful-payment')
 def successful_payment(current_user: dict = Depends(get_current_user)):
     _, get_user_info = current_user
     
@@ -141,7 +141,7 @@ def successful_payment(current_user: dict = Depends(get_current_user)):
     return RedirectResponse(url='https://localhost:3000/profile')
 
 
-@router.post('/webhook/stripe/cancelled-payment')
+@router.post('/stripe/cancelled-payment')
 def cancelled_payment():
     pass
 

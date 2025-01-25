@@ -10,7 +10,7 @@ export const fetchInterviewPrepPlan = async (jobUrl: string, jwtToken: string): 
         jobUrl,
     }
 
-    const apiCall = await fetch('/api/plan', { method: 'POST', body: JSON.stringify(body), headers })
+    const apiCall = await fetch('/api/coach/plan', { method: 'POST', body: JSON.stringify(body), headers })
     
     const response = await apiCall.json()
 

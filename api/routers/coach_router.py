@@ -8,11 +8,11 @@ from auth import get_current_user
 from environment import get_env
 from routers.response_model import ErrorModel
 from routers.plan_response import PlanResponse
-from agents.planner_agent import run_agents
+from agents.agents import run_agents
 from lakera_chainguard import LakeraGuardError
 from fastapi.responses import JSONResponse
 
-router = APIRouter()
+router = APIRouter(prefix='/coach')
 
 
 class PlanRequest(BaseModel):

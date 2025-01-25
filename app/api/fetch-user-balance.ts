@@ -11,7 +11,7 @@ export const fetchUserBalance = async (jwtToken: string): Promise<UserBalanceRes
         Authorization: `Bearer ${jwtToken}`,
     }
 
-    const apiCall = await fetch('/api/balance', { method: 'GET', headers })
+    const apiCall = await fetch('/api/paymentsbalance', { method: 'GET', headers })
     
     const response = await apiCall.json()
 

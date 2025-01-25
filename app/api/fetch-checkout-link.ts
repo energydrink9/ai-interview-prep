@@ -11,7 +11,7 @@ export const fetchCheckoutLink = async (jwtToken: string): Promise<string> => {
         Authorization: `Bearer ${jwtToken}`,
     }
 
-    const apiCall = await fetch('/api/checkout-link', { method: 'GET', headers })
+    const apiCall = await fetch('/api/payments/checkout-link', { method: 'GET', headers })
     
     const response = await apiCall.json()
 
