@@ -12,7 +12,7 @@ export const useInterviewPrepPlan = (jobUrl: string) => {
     const { jwtToken } = useJwtToken()
 
     const { status, data } = useQuery<PlanResponse, ApiError>({
-        queryKey: ['plan', jobUrl],
+        queryKey: ['plan', jwtToken, jobUrl],
         queryFn: () => fetchInterviewPrepPlan(jobUrl, jwtToken!),
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,

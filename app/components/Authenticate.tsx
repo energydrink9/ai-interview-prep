@@ -9,11 +9,11 @@ export const Authenticate: React.FC<PropsWithChildren> = ({ children }) => {
 
     useEffect(() => {
         if (!isLoading && !isAuthenticated) {
-            const redirectUri = window.location.href
+            // const redirectUri = window.location.href
             // router.push(`/login?redirectUri=${redirectUri}`)
             router.push(`/login`)   
         }
-    }, [isLoading, isAuthenticated])
+    }, [isLoading, isAuthenticated, router])
 
     if (isLoading) {
         return <LoadingSpinner />

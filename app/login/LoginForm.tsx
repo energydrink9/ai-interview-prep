@@ -2,11 +2,8 @@
 
 import { LoginButton } from "../components/LoginButton"
 
-interface LoginFormProps {
-    redirectUri: string
-}
 
-export const LoginForm: React.FC<LoginFormProps> = ({ redirectUri }) => {
+export const LoginForm: React.FC = () => {
 
     return (
         <div className="flex flex-col space-y-4">
@@ -18,7 +15,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ redirectUri }) => {
                     Click the button below to log in or sign up, and you&apos;ll be back in no time to kick off your preparation!
                 </p>
             </div>
-            <div className="flex flex-row justify-end"><LoginButton redirectUri={redirectUri} /></div>
+            <div className="flex flex-row justify-end"><LoginButton /></div>
         </div>
     )
 }

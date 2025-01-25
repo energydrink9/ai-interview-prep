@@ -6,10 +6,11 @@ import { useBalance } from "./use-balance"
 import { LoadingSpinner } from "../components/LoadingSpinner"
 import { Button } from "../components/Button"
 import { useCheckoutLink } from "./use-checkout-link"
+import Image from "next/image"
 
 
 const Profile: React.FC = () => {
-    const { isAuthenticated, isLoading, user } = useAuth0()
+    const { isAuthenticated, user } = useAuth0()
     const { status: balanceStatus, balance } = useBalance()
 
     const { status: checkoutLinkStatus, checkoutLink } = useCheckoutLink()
@@ -26,10 +27,10 @@ const Profile: React.FC = () => {
 
             <div className="card bg-base-100 w-96 shadow-xl">
                 <figure>
-                    <img
+                    { user.picture !== undefined && <Image
                     className="rounded-full"
                     src={user.picture}
-                    alt="User profile picture" />
+                    alt="User profile picture" /> }
                 </figure>
                 <div className="card-body">
                     <h2 className="card-title">{user.name}</h2>

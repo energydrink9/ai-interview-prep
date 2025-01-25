@@ -7,7 +7,7 @@ export const useBalance = () => {
     const { status: jwtStatus, jwtToken } = useJwtToken()
     
     const { status, data, isError, isLoading } = useQuery({
-        queryKey: ['balance'],
+        queryKey: ['balance', jwtToken],
         queryFn: () => fetchUserBalance(jwtToken!),
         enabled: jwtStatus == 'success' && jwtToken !== undefined,
     });

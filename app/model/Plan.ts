@@ -1,3 +1,5 @@
+import { Job } from "./Job";
+
 export interface InterviewPreparationSession {
     objective: string;
     note: string;
@@ -13,10 +15,6 @@ export interface Plan {
     overview: string;
     requiredSkillCategories: Array<SkillCategory>;
     sessions: Array<InterviewPreparationSession>;
-}
-
-export interface Job {
-    company: string;
 }
 
 export interface PlanResponse {

@@ -2,13 +2,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "../components/Button"
 import { useSessionToken } from "./use-session-token"
 import { InterviewPreparationSession } from "../model/Plan";
+import { Job } from "../model/Job";
 
 
 const REALTIME_API_URL = "https://api.openai.com/v1/realtime";
 const REALTIME_API_MODEL = "gpt-4o-mini-realtime-preview-2024-12-17";
 
 
-const getPrompt = (job: any, session: InterviewPreparationSession): string => {
+const getPrompt = (job: Job, session: InterviewPreparationSession): string => {
     return `
 You are an AI-powered interview coach assisting a user preparing for a job interview. The session is voice-based, and your role is to simulate a realistic interview experience while providing constructive feedback and guidance.
 
@@ -142,7 +143,7 @@ const Timer: React.FC<TimerProps> = ({ duration, startTime }) => {
 
 
 interface StartedInterviewSession {
-    job: any;
+    job: Job;
     session: InterviewPreparationSession;
     onQuit: () => void;
 }
@@ -150,12 +151,7 @@ interface StartedInterviewSession {
 export const StartedInterviewSession: React.FC<StartedInterviewSession> = ({ job, session, onQuit }) => {
     const { status, sessionToken, refetch } = useSessionToken()
 
-    const retry = () => {
-        refetch()
-    }
-    const quit = () => {
-        onQuit()
-    }
+    const prompt = useMemo(() => getPrompt(job, session), [job, session])
 
     const audioRef = useCallback(
         (node: HTMLAudioElement) => {
@@ -167,28 +163,26 @@ export const StartedInterviewSession: React.FC<StartedInterviewSession> = ({ job
                 }
             }
         },
-        [status, sessionToken, session],
+        [status, sessionToken, prompt],
     )
 
-    const duration = useMemo(() => session.durationInMinutes * 60 * 1000,[session.durationInMinutes])
+    const duration = useMemo(() => session.durationInMinutes * 60 * 1000, [session.durationInMinutes])
     const [startTime] = useState(new Date().getTime())
 
     useEffect(() => {
         const interval = setInterval(() => {
-            quit()
+            onQuit()
         }, session.durationInMinutes * 60 * 1000)
         return () => {
             clearInterval(interval)
         }
-    }, [])
-
-    const prompt = getPrompt(job, session)
+    }, [onQuit, session.durationInMinutes])
 
     if (status == 'error') {
         return (
             <div className="flex flex-col space-y-5">
                 <div>Error while loading the session</div>
-                <div><Button onClick={retry}>Retry</Button></div>
+                <div><Button onClick={refetch}>Retry</Button></div>
             </div>
         )
     }
@@ -206,7 +200,7 @@ export const StartedInterviewSession: React.FC<StartedInterviewSession> = ({ job
             <Timer duration={duration} startTime={startTime} />
         </div>
         <div>
-            <Button primary onClick={quit}>Quit this session</Button>
+            <Button primary onClick={onQuit}>Quit this session</Button>
         </div>
     </div>
 }

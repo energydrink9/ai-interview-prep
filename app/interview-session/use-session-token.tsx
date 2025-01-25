@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { fetchSessionToken } from "../api/fetch-session-token"
 import { useAuth0 } from "@auth0/auth0-react"
+import { useMemo } from "react"
 
 export const useSessionToken = () => {
 
@@ -12,6 +13,6 @@ export const useSessionToken = () => {
         enabled: isAuthenticated,
     })
 
-    return { status, sessionToken, refetch }
+    return useMemo(() => ({ status, sessionToken, refetch }), [status, sessionToken, refetch])
 }
 

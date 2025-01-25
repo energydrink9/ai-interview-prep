@@ -1,8 +1,4 @@
 
-interface UserBalanceResponse {
-    balance: number;
-}
-
 export const fetchCheckoutLink = async (jwtToken: string): Promise<string> => {
 
     const headers = {
